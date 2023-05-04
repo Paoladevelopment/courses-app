@@ -1,0 +1,14 @@
+.app-header {
+  background-color: hsl(205, 86%, 17%);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 80px;
+  padding: 0 16px;
+}
+
+.app-header__user-logout {
+  display: flex;
+  align-items: center;
+  gap: 36px;
+}

@@ -1,0 +1,18 @@
+.app-input {
+  font-family: 'Roboto';
+  border: none;
+  border-radius: 0.25rem;
+  padding: 6px;
+  font-size: 1rem;
+  display: block;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+  color: hsl(212, 33%, 89%);
+}
+
+::placeholder {
+  color: #222;
+}

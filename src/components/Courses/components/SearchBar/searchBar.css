@@ -1,0 +1,21 @@
+.app-searchBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 50%;
+  gap: 12px;
+}
+
+.app-input {
+  flex-grow: 1;
+}
+
+@media screen and (min-width: 1080px) {
+  .app-searchBar {
+    justify-content: flex-start;
+  }
+  .app-input {
+    flex-grow: 0;
+    width: 500px;
+  }
+}

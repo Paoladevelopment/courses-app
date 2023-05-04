@@ -1,0 +1,18 @@
+.app-courses {
+  margin: 24px;
+}
+
+.app-courses__header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.app-courses__header > .btn {
+  color: hsl(205, 86%, 90%);
+  background-color: hsl(205, 77%, 10%);
+}
+
+.app-courses__header > .btn:hover {
+  background-color: hsl(205, 86%, 90%);
+  color: hsl(205, 77%, 10%);
+}

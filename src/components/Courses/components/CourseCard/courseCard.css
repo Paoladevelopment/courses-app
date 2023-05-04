@@ -1,0 +1,46 @@
+.app-courseCard {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 32px;
+  background-color: hsl(211, 27%, 60%);
+  padding: 16px;
+  border-radius: 0.75rem;
+  box-shadow: hsl(211, 39%, 20%) 0px 8px 24px;
+}
+
+.app-courseCard h1 {
+  font-size: 1.5rem;
+  color: hsl(211, 39%, 23%);
+}
+
+.app-courseCard p {
+  font-size: 1rem;
+  color: hsl(205, 77%, 15%);
+}
+
+.app-courseCard__detailed-info,
+.app-courseCard__general-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.app-courseCard__general-info {
+  width: 70%;
+  margin-right: 12px;
+  gap: 24px;
+}
+.app-courseCard__detailed-info {
+  width: 30%;
+}
+
+.app-courseCard__detailed-info .btn {
+  margin-top: 16px;
+  align-self: center;
+}
+
+.app-courseCard__detailed-info p:first-of-type {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
