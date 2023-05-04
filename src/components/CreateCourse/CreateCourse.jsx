@@ -66,6 +66,7 @@ export const CreateCourse = () => {
       };
       setAuthors([...authors, newAu]);
       mockedAuthorsList.push(newAu);
+      setTextCreateAuthor('');
     }
   };
 
@@ -114,6 +115,7 @@ export const CreateCourse = () => {
                   labelText='Author name'
                   id='author'
                   placeholder='Enter author name...'
+                  value={textCreateAuthor}
                   type='text'
                   onChange={handleInputName}
                 />
