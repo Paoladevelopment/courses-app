@@ -1,8 +1,10 @@
+import { useNavigate } from 'react-router-dom';
 import { Button } from '../../../../common/Button/Button';
 import { BUTTON_TEXT_COUSECARD } from '../../../../constants';
 import './courseCard.css';
 export const CourseCard = (props) => {
-  const { title, description, creationDate, duration, authors } = props;
+  const { id, title, description, creationDate, duration, authors } = props;
+  let navigation = useNavigate();
   return (
     <div className='app-courseCard'>
       <div className='app-courseCard__general-info'>
@@ -21,7 +23,10 @@ export const CourseCard = (props) => {
         <p>
           <b>Created:</b> {''} {creationDate}
         </p>
-        <Button text={BUTTON_TEXT_COUSECARD} />
+        <Button
+          text={BUTTON_TEXT_COUSECARD}
+          onClick={() => navigation(`/courses/${id}`)}
+        />
       </div>
     </div>
   );

@@ -2,6 +2,7 @@ export const BUTTON_TEXT_HEADER = 'Logout';
 export const BUTTON_TEXT_COUSECARD = 'Show course';
 export const BUTTON_TEXT_SEARCHBAR = 'Search';
 export const PLACEHOLDER_SEARCHBAR = 'Enter course name...';
+
 export const mockedCoursesList = [
   {
     id: 'de5aaa59-90f5-4dbc-b8a9-aaf205c551ba',

@@ -1,0 +1,61 @@
+.app-registration {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: hsl(209, 61%, 16%);
+}
+
+.app-registration h1 {
+  font-size: 2.25rem;
+  margin-bottom: 36px;
+  color: hsl(0, 0%, 100%);
+}
+
+.app-registration input,
+.app-registration .btn {
+  background-color: hsl(209, 61%, 30%);
+}
+
+.app-registration .btn:hover {
+  background-color: hsl(209, 61%, 50%);
+  color: hsl(209, 61%, 20%);
+}
+
+.app-registration .btn {
+  align-self: center;
+}
+
+.app-registration label,
+.app-registration__nav {
+  color: hsl(209, 61%, 50%);
+}
+
+.app-registration__form {
+  width: 50%;
+  padding: 24px;
+  margin-bottom: 36px;
+  display: flex;
+  flex-direction: column;
+  background-color: hsl(209, 61%, 20%);
+  border-radius: 1.25rem;
+  box-shadow: hsl(209, 61%, 16%) 0px 2px 8px 0px;
+}
+
+.app-registration__field {
+  margin-bottom: 18px;
+}
+
+.app-registration__field p {
+  margin: 8px 0 0 6px;
+}
+
+.app-registration__nav {
+  margin-left: 8px;
+  text-decoration: none;
+}
+
+.app-registration__nav:hover {
+  color: hsl(209, 61%, 40%);
+}

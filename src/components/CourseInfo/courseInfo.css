@@ -1,0 +1,57 @@
+.app-courseInfo {
+  margin-top: 72px;
+}
+
+.app-courseInfo--notFound {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.app-courseInfo--notFound p {
+  font-size: 4rem;
+}
+
+.app-courseInfo__title {
+  text-align: center;
+  font-size: 3rem;
+}
+
+.app-courseInfo__title,
+.app-courseInfo span {
+  color: hsl(211, 27%, 60%);
+}
+
+.app-courseInfo span {
+  font-weight: 700;
+}
+
+.app-courseInfo__info {
+  margin: 64px 0 0 32px;
+  display: flex;
+  gap: 48px;
+}
+
+.app-courseInfo__description {
+  width: 50%;
+}
+
+.app-courseInfo__detailed p {
+  margin-bottom: 12px;
+}
+
+pre {
+  font-size: 1.125rem;
+  font-family: 'Roboto';
+  color: hsl(213, 32%, 89%);
+}
+
+.app-courseInfo__btn {
+  margin: 32px 0 0 24px;
+}
+
+.app-courseInfo__btn .btn {
+  background-color: hsl(211, 39%, 23%);
+  font-size: 1.25rem;
+}

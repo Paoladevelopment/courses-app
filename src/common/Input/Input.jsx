@@ -6,6 +6,7 @@ export const Input = (props) => {
     placeholder,
     value,
     type,
+    isRequired,
     onChange,
     register,
     validators,
@@ -21,6 +22,7 @@ export const Input = (props) => {
         type={type}
         onChange={onChange}
         {...(register && register(id, validators))}
+        required={isRequired}
         className='app-input'
       />
     </>

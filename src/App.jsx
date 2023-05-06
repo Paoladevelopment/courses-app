@@ -1,11 +1,9 @@
-import { Header } from './components/Header/Header.jsx';
-import { Courses } from './components/Courses/Courses.jsx';
 import './App.css';
+import { RoutesConfig } from './RoutesConfig.js';
 function App() {
   return (
     <>
-      <Header />
-      <Courses />
+      <RoutesConfig />
     </>
   );
 }
