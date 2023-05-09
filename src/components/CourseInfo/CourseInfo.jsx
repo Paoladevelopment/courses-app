@@ -6,10 +6,13 @@ import { getHoursDuration } from '../../helpers/pipeDuration';
 import './courseInfo.css';
 import { getAuthorName } from '../../helpers/authorByName';
 import { Button } from '../../common/Button/Button';
+import { useSelector } from 'react-redux';
 
 export const CourseInfo = () => {
+  const courses = useSelector((state) => state.courses);
+  const authors = useSelector((state) => state.authors);
   const { courseId } = useParams();
-  const course = getCourse(courseId);
+  const course = getCourse(courses, courseId);
   let navigation = useNavigate();
   const handleBackToCourse = () => {
     navigation('/courses');
@@ -46,7 +49,7 @@ export const CourseInfo = () => {
                 <p>
                   <span>Authors: </span>
                 </p>
-                <pre>{getAuthorName(course.authors).join('\n')}</pre>
+                <pre>{getAuthorName(authors, course.authors).join('\n')}</pre>
               </div>
             </div>
           </div>

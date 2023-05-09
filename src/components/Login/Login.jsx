@@ -3,8 +3,12 @@ import { Button } from '../../common/Button/Button';
 import { Link, useNavigate } from 'react-router-dom';
 import './login.css';
 import { useState } from 'react';
+import { loginAccess } from '../../services';
+import { login } from '../../store/user/actionCreators';
+import { useDispatch } from 'react-redux';
 
-export const Login = ({ giveAccessTo }) => {
+export const Login = () => {
+  const dispatch = useDispatch();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [emailError, setEmailError] = useState('');
@@ -17,31 +21,20 @@ export const Login = ({ giveAccessTo }) => {
       email,
       password,
     };
-    const response = await fetch('http://localhost:4000/login', {
-      method: 'POST',
-      body: JSON.stringify(userLog),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
 
-    const result = await response.json();
-    if (!result.successful) {
-      const { errors } = result;
-      if (errors) {
-        setEmailError('Enter a valid email.');
-        setError('');
-      } else {
-        setEmailError('');
-        setError('Invalid data: Try again or register.');
-      }
+    const result = await loginAccess(userLog);
+    if (result.emailError) {
+      setError('');
+      setEmailError(result.emailError);
+    } else if (result.error) {
+      setEmailError('');
+      setError(result.error);
     } else {
-      const userToken = {
-        token: result.result,
-        name: result.user.name,
-      };
-      localStorage.setItem('userToken', JSON.stringify(userToken));
-      giveAccessTo(userToken);
+      localStorage.setItem(
+        'userToken',
+        JSON.stringify({ ...result, email: email })
+      );
+      dispatch(login({ ...result, email: email }));
       navigation('/courses');
     }
   };

@@ -39,6 +39,11 @@
   align-self: center;
 }
 
+.app-courseCard__btns {
+  display: flex;
+  justify-content: space-between;
+}
+
 .app-courseCard__detailed-info p:first-of-type {
   overflow: hidden;
   white-space: nowrap;

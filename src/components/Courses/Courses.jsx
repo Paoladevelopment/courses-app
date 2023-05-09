@@ -1,15 +1,22 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CourseCard } from './components/CourseCard/CourseCard';
 import { SearchBar } from './components/SearchBar/SearchBar';
 import { Button } from '../../common/Button/Button';
-import { mockedCoursesList } from '../../constants';
 import { getAuthorName } from '../../helpers/authorByName';
 import { getHoursDuration } from '../../helpers/pipeDuration';
 import { getDateInFormat } from '../../helpers/dateGeneratop';
 import './courses.css';
+import { useSelector } from 'react-redux';
+
 export const Courses = () => {
-  const [courses, setCourses] = useState(mockedCoursesList);
+  const allCourses = useSelector((state) => {
+    return state.courses;
+  });
+  const authors = useSelector((state) => {
+    return state.authors;
+  });
+  const [courses, setCourses] = useState(allCourses);
   let navigation = useNavigate();
 
   const searchCourse = (toSearch) => {
@@ -26,8 +33,12 @@ export const Courses = () => {
   };
 
   const showAllCourses = () => {
-    setCourses(mockedCoursesList);
+    setCourses(allCourses);
   };
+
+  useEffect(() => {
+    setCourses(allCourses);
+  }, [allCourses]);
   return (
     <>
       <div className='app-courses'>
@@ -43,7 +54,7 @@ export const Courses = () => {
             <CourseCard
               key={course.id}
               {...course}
-              authors={getAuthorName(course.authors).join(', ')}
+              authors={getAuthorName(authors, course.authors).join(', ')}
               duration={getHoursDuration(course.duration)}
               creationDate={getDateInFormat(course.creationDate)}
             />

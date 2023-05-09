@@ -1,4 +1,3 @@
-import { mockedCoursesList } from '../constants';
-export const getCourse = (courseId) => {
-  return mockedCoursesList.find((course) => course.id === courseId);
+export const getCourse = (courses, courseId) => {
+  return courses.find((course) => course.id === courseId);
 };

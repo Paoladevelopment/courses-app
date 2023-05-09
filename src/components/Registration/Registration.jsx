@@ -4,6 +4,7 @@ import { useState } from 'react';
 import './registration.css';
 import { Link, useNavigate } from 'react-router-dom';
 
+import { registerNewUser } from '../../services';
 export const Registration = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -18,36 +19,23 @@ export const Registration = () => {
       password: pass,
       email,
     };
-    try {
-      const response = await fetch('http://localhost:4000/register', {
-        method: 'POST',
-        body: JSON.stringify(newUser),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-      const result = await response.json();
-      if (result.successful) {
-        setPassError('');
-        setEmailError('');
-        navigation('/login');
-      } else {
-        console.log(result);
-        if (result.errors.length > 1) {
-          setPassError('Password should be 6 characters minimum');
-          setEmailError('Invalid email or email already exist.');
-        } else {
-          if (result.errors[0].includes('email')) {
-            setPassError('');
-            setEmailError('Invalid email or email already exist.');
-          } else if (result.errors[0].includes('password')) {
-            setEmailError('');
-            setPassError('Password should be 6 characters minimum');
-          }
-        }
-      }
-    } catch (error) {
-      alert(error);
+    const result = await registerNewUser(newUser);
+
+    if (result.result) {
+      setPassError('');
+      setEmailError('');
+      navigation('/login');
+    } else if (result.emailError && result.passError) {
+      setPassError(result.passError);
+      setEmailError(result.emailError);
+    } else if (result.emailError) {
+      setPassError('');
+      setEmailError(result.emailError);
+    } else if (result.passError) {
+      setEmailError('');
+      setPassError(result.passError);
+    } else {
+      alert(result.error);
     }
   };
   return (
