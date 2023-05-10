@@ -3,16 +3,16 @@ import { Button } from '../../common/Button/Button';
 import { Link, useNavigate } from 'react-router-dom';
 import './login.css';
 import { useState } from 'react';
+import { loginAccess, getUser } from '../../store/user/thunk';
 import { login } from '../../store/user/actionCreators';
 import { useDispatch } from 'react-redux';
-
 export const Login = () => {
   const dispatch = useDispatch();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [emailError, setEmailError] = useState('');
-  let navigation = useNavigate();
   const [error, setError] = useState('');
+  let navigation = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -20,6 +20,22 @@ export const Login = () => {
       email,
       password,
     };
+    const result = await loginAccess(userLog);
+    if (result.emailError) {
+      setError('');
+      setEmailError(result.emailError);
+    } else if (result.error) {
+      setEmailError('');
+      setError(result.error);
+    } else {
+      localStorage.setItem(
+        'userToken',
+        JSON.stringify({ token: result, email: email })
+      );
+      const user = await getUser(result);
+      dispatch(login({ ...user, token: result }));
+      navigation('/courses');
+    }
   };
 
   return (

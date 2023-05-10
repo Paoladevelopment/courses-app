@@ -13,10 +13,11 @@ import { Header } from './components/Header/Header';
 import { CourseInfo } from './components/CourseInfo/CourseInfo';
 import { getAllCourses } from './store/courses/thunk';
 import { getAllAuthors } from './store/authors/thunks';
+import { getAuth } from './store/user/selectors';
 
 export const RoutesConfig = () => {
   const dispatch = useDispatch();
-  const userToken = useSelector((state) => state.user.isAuth);
+  const userToken = useSelector(getAuth);
   dispatch(getAllCourses());
   dispatch(getAllAuthors());
   return (

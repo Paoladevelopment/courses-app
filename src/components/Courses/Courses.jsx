@@ -15,7 +15,6 @@ export const Courses = () => {
   const authors = useSelector(getAuthors);
   const [courses, setCourses] = useState(allCourses);
   let navigation = useNavigate();
-
   const searchCourse = (toSearch) => {
     const foundCourses = [];
     courses.forEach((course) => {

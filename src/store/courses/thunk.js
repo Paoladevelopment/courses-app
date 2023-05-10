@@ -1,8 +1,11 @@
 import * as creators from './actionCreators';
 
 const userToken = localStorage.getItem('userToken');
-const token = JSON.parse(userToken).token;
-console.log(token);
+
+let token = '';
+if (userToken) {
+  token = JSON.parse(userToken).token;
+}
 export const getAllCourses = () => {
   return async (dispatch) => {
     dispatch(creators.fetchCourseRequest);
