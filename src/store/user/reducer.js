@@ -1,38 +1,29 @@
 import * as actions from './actionTypes';
 
-const userInitialState = (() => {
-  if (localStorage.getItem('userToken')) {
-    const userInfo = JSON.parse(localStorage.getItem('userToken'));
-    return {
-      isAuth: true,
-      name: userInfo.name,
-      email: userInfo.email,
-      token: userInfo.token,
-    };
-  }
-  return {
-    isAuth: false,
+const userInitialState = {
+  loading: false,
+  user: {
+    isAuth: '',
     name: '',
     email: '',
     token: '',
-  };
-})();
+    role: '',
+  },
+  error: '',
+};
 
 export const reducerUser = (state = userInitialState, action) => {
   switch (action.type) {
     case actions.LOGIN:
       return {
-        isAuth: true,
-        name: action.payload.user.name,
-        email: action.payload.user.email,
-        token: action.payload.user.token,
-      };
-    case actions.LOGOUT:
-      return {
-        isAuth: false,
-        name: '',
-        email: '',
-        token: '',
+        ...state,
+        user: {
+          isAuth: true,
+          name: action.payload.user.name,
+          email: action.payload.user.email,
+          token: action.payload.user.token,
+          role: action.payload.user.role,
+        },
       };
     default:
       return state;

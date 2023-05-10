@@ -5,30 +5,20 @@ import {
   Routes,
 } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
 import { Registration } from './components/Registration/Registration';
 import { Login } from './components/Login/Login';
 import { Courses } from './components/Courses/Courses';
-import { CreateCourse } from './components/CreateCourse/CreateCourse';
+import { CourseForm } from './components/CourseForm/CourseForm';
 import { Header } from './components/Header/Header';
 import { CourseInfo } from './components/CourseInfo/CourseInfo';
-import { getAllCourses, getAllAuthors } from './services';
-import { getCourses } from './store/courses/actionCreators';
-import { getAuthors } from './store/authors/actionCreators';
+import { getAllCourses } from './store/courses/thunk';
+import { getAllAuthors } from './store/authors/thunks';
+
 export const RoutesConfig = () => {
   const dispatch = useDispatch();
   const userToken = useSelector((state) => state.user.isAuth);
-
-  const listCourses = async () => {
-    const courses = await getAllCourses();
-    const authors = await getAllAuthors();
-    dispatch(getCourses(courses));
-    dispatch(getAuthors(authors));
-  };
-
-  useEffect(() => {
-    listCourses();
-  }, []);
+  dispatch(getAllCourses());
+  dispatch(getAllAuthors());
   return (
     <>
       <Router>
@@ -47,7 +37,7 @@ export const RoutesConfig = () => {
 
           <Route
             path='/courses/add'
-            element={userToken ? <CreateCourse /> : <Navigate to='/' />}
+            element={userToken ? <CourseForm /> : <Navigate to='/' />}
           />
 
           <Route

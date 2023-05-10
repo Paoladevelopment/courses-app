@@ -1,23 +1,37 @@
 import * as actions from './actionTypes';
 
-const coursesInitialState = [];
+const initialState = {
+  loading: false,
+  courses: [],
+  error: '',
+};
 
-export const reducerCourses = (state = coursesInitialState, action) => {
+export const reducerCourses = (state = initialState, action) => {
   switch (action.type) {
+    case actions.FETCH_COURSE_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case actions.FETCH_COURSE_SUCCESS:
+      return {
+        loading: false,
+        courses: action.payload.courses,
+        error: '',
+      };
+
+    case actions.FETCH_COURSE_FAILURE:
+      return {
+        loading: false,
+        users: [],
+        error: action.payload.error,
+      };
     case actions.SAVE_COURSE:
-      return [...state, action.payload.course];
+      return {
+        ...state,
+        courses: [...state.courses, action.payload.course],
+      };
 
-    case actions.DELETE_COURSE:
-      return state.filter((course) => course.id !== action.payload.id);
-
-    case actions.UPDATE_COURSE:
-      return state.map((course) =>
-        course.id === action.payload.courseUpdated.id
-          ? action.payload.courseUpdated
-          : course
-      );
-    case actions.GET_COURSES:
-      return action.payload.courses;
     default:
       return state;
   }

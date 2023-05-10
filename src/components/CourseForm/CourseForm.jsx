@@ -8,15 +8,13 @@ import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
-import './createCourse.css';
+import './courseForm.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { addAuthor } from '../../store/authors/actionCreators';
-import { saveNewCourse } from '../../store/courses/actionCreators';
-
-import { store } from '../../store/index';
-export const CreateCourse = () => {
+import { getAuthors } from '../../store/authors/selectors';
+import { addAuthor } from '../../store/authors/thunks';
+export const CourseForm = () => {
   const dispatch = useDispatch();
-  const authorsLst = useSelector((state) => state.authors);
+  const authorsLst = useSelector(getAuthors);
   const {
     register,
     formState: { errors },
@@ -40,7 +38,6 @@ export const CreateCourse = () => {
         duration: parseInt(duration),
         authors: getAuthorsId(courseAuthors),
       };
-      dispatch(saveNewCourse(newCourse));
       navigation('/courses');
     } else {
       alert('Please select authors for the course');
@@ -71,10 +68,10 @@ export const CreateCourse = () => {
       };
       setAuthors([...authors, newAu]);
       dispatch(addAuthor(newAu));
-      console.log(store.getState());
       setTextCreateAuthor('');
     }
   };
+
   return (
     <>
       <form className='app-createCourse' onSubmit={handleSubmit(onSubmit)}>

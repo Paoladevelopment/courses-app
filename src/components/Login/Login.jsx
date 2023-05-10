@@ -3,7 +3,6 @@ import { Button } from '../../common/Button/Button';
 import { Link, useNavigate } from 'react-router-dom';
 import './login.css';
 import { useState } from 'react';
-import { loginAccess } from '../../services';
 import { login } from '../../store/user/actionCreators';
 import { useDispatch } from 'react-redux';
 
@@ -21,22 +20,6 @@ export const Login = () => {
       email,
       password,
     };
-
-    const result = await loginAccess(userLog);
-    if (result.emailError) {
-      setError('');
-      setEmailError(result.emailError);
-    } else if (result.error) {
-      setEmailError('');
-      setError(result.error);
-    } else {
-      localStorage.setItem(
-        'userToken',
-        JSON.stringify({ ...result, email: email })
-      );
-      dispatch(login({ ...result, email: email }));
-      navigation('/courses');
-    }
   };
 
   return (

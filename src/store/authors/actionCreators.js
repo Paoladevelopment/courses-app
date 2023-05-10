@@ -1,5 +1,29 @@
 import * as actions from './actionTypes';
 
+export const fetchAuthorsRequest = () => {
+  return {
+    type: actions.FETCH_AUTHORS_REQUEST,
+  };
+};
+
+export const fetchAuthorSuccess = (authors) => {
+  return {
+    type: actions.FETCH_AUTHORS_SUCCESS,
+    payload: {
+      authors,
+    },
+  };
+};
+
+export const fetchAuthorFailure = (error) => {
+  return {
+    type: actions.FETCH_AUTHORS_FAILURE,
+    payload: {
+      error,
+    },
+  };
+};
+
 export const addAuthor = (author) => {
   return {
     type: actions.SAVE_AUTHOR,

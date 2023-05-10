@@ -1,28 +1,3 @@
-const loginAccess = async (user) => {
-  const response = await fetch('http://localhost:4000/login', {
-    method: 'POST',
-    body: JSON.stringify(user),
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
-
-  const result = await response.json();
-  if (!result.successful) {
-    const { errors } = result;
-    if (errors) {
-      return { emailError: 'Enter a valid email' };
-    } else {
-      return { error: 'Invalid data: Try again or register.' };
-    }
-  }
-
-  return {
-    token: result.result,
-    name: result.user.name,
-  };
-};
-
 const registerNewUser = async (newUser) => {
   try {
     const response = await fetch('http://localhost:4000/register', {
@@ -58,17 +33,18 @@ const registerNewUser = async (newUser) => {
   }
 };
 
-const getAllAuthors = async () => {
-  const response = await fetch('http://localhost:4000/authors/all');
+const updateCourseId = async (id, info, token) => {
+  const response = await fetch(`http://localhost:4000/courses/${id}`, {
+    method: 'PUT',
+    body: JSON.stringify(info),
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `${token}`,
+    },
+  });
 
   const result = await response.json();
-  return result.result;
+  return result;
 };
 
-const getAllCourses = async () => {
-  const response = await fetch('http://localhost:4000/courses/all');
-  const result = await response.json();
-  return result.result;
-};
-
-export { loginAccess, registerNewUser, getAllAuthors, getAllCourses };
+export { registerNewUser, updateCourseId };

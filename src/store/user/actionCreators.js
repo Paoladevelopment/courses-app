@@ -12,3 +12,27 @@ export const logout = () => {
     type: actions.LOGOUT,
   };
 };
+
+export const fetchUserRequest = () => {
+  return {
+    type: actions.FETCH_USER_REQUEST,
+  };
+};
+
+export const fetchUserSuccess = (user) => {
+  return {
+    type: actions.FETCH_USER_SUCCESS,
+    payload: {
+      user,
+    },
+  };
+};
+
+export const fetchUserFailure = (error) => {
+  return {
+    type: actions.FETCH_USER_FAILURE,
+    payload: {
+      error,
+    },
+  };
+};

@@ -1,5 +1,29 @@
 import * as actions from './actionTypes';
 
+export const fetchCourseRequest = () => {
+  return {
+    type: actions.FETCH_COURSE_REQUEST,
+  };
+};
+
+export const fetchCourseSuccess = (courses) => {
+  return {
+    type: actions.FETCH_COURSE_SUCCESS,
+    payload: {
+      courses,
+    },
+  };
+};
+
+export const fetchCourseFailure = (error) => {
+  return {
+    type: actions.FETCH_COURSE_FAILURE,
+    payload: {
+      error,
+    },
+  };
+};
+
 export const saveNewCourse = (course) => {
   return {
     type: actions.SAVE_COURSE,

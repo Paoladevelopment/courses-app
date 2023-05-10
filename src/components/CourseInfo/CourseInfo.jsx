@@ -7,10 +7,12 @@ import './courseInfo.css';
 import { getAuthorName } from '../../helpers/authorByName';
 import { Button } from '../../common/Button/Button';
 import { useSelector } from 'react-redux';
+import { getCourses } from '../../store/courses/selectors';
+import { getAuthors } from '../../store/authors/selectors';
 
 export const CourseInfo = () => {
-  const courses = useSelector((state) => state.courses);
-  const authors = useSelector((state) => state.authors);
+  const courses = useSelector(getCourses);
+  const authors = useSelector(getAuthors);
   const { courseId } = useParams();
   const course = getCourse(courses, courseId);
   let navigation = useNavigate();

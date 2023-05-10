@@ -8,14 +8,11 @@ import { getHoursDuration } from '../../helpers/pipeDuration';
 import { getDateInFormat } from '../../helpers/dateGeneratop';
 import './courses.css';
 import { useSelector } from 'react-redux';
-
+import { getCourses } from '../../store/courses/selectors';
+import { getAuthors } from '../../store/authors/selectors';
 export const Courses = () => {
-  const allCourses = useSelector((state) => {
-    return state.courses;
-  });
-  const authors = useSelector((state) => {
-    return state.authors;
-  });
+  const allCourses = useSelector(getCourses);
+  const authors = useSelector(getAuthors);
   const [courses, setCourses] = useState(allCourses);
   let navigation = useNavigate();
 
