@@ -22,7 +22,7 @@ export const loginAccess = async (user) => {
   return result.result;
 };
 
-const registerNewUser = async (newUser) => {
+export const registerNewUser = async (newUser) => {
   try {
     const response = await fetch('http://localhost:4000/register', {
       method: 'POST',
@@ -57,18 +57,21 @@ const registerNewUser = async (newUser) => {
   }
 };
 
-export const getUser = async (auth) => {
-  const response = await fetch('http://localhost:4000/users/me', {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: auth,
-    },
-  });
-  const result = await response.json();
-  if (result.successful) {
-    return result.result;
-  }
+export const getUser = (userToken) => {
+  return async (dispatch) => {
+    const response = await fetch('http://localhost:4000/users/me', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: userToken,
+      },
+    });
+    const result = await response.json();
+    if (result.successful) {
+      dispatch(creators.getUser(result.result));
+      dispatch(creators.login(userToken));
+    }
+  };
 };
 
 export const logOut = (userToken) => {

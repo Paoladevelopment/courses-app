@@ -4,7 +4,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import './login.css';
 import { useState } from 'react';
 import { loginAccess, getUser } from '../../store/user/thunk';
-import { login } from '../../store/user/actionCreators';
 import { useDispatch } from 'react-redux';
 export const Login = () => {
   const dispatch = useDispatch();
@@ -28,12 +27,8 @@ export const Login = () => {
       setEmailError('');
       setError(result.error);
     } else {
-      localStorage.setItem(
-        'userToken',
-        JSON.stringify({ token: result, email: email })
-      );
-      const user = await getUser(result);
-      dispatch(login({ ...user, token: result }));
+      localStorage.setItem('userToken', result);
+      dispatch(getUser(result));
       navigation('/courses');
     }
   };

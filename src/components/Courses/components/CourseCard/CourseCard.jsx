@@ -4,11 +4,17 @@ import { BUTTON_TEXT_COUSECARD } from '../../../../constants';
 import './courseCard.css';
 import editImg from '../../../../assets/draw.png';
 import deleteImg from '../../../../assets/delete.png';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { getRole } from '../../../../store/user/selectors';
+import { deleteCourse } from '../../../../store/courses/thunk';
 export const CourseCard = (props) => {
   const dispatch = useDispatch();
+  const role = useSelector(getRole);
   const { id, title, description, creationDate, duration, authors } = props;
   let navigation = useNavigate();
+  const courseDelete = (id) => {
+    dispatch(deleteCourse(id));
+  };
   return (
     <div className='app-courseCard'>
       <div className='app-courseCard__general-info'>
@@ -32,12 +38,20 @@ export const CourseCard = (props) => {
             text={BUTTON_TEXT_COUSECARD}
             onClick={() => navigation(`/courses/${id}`)}
           />
-          <Button imageSrc={editImg} description='edit icon' />
-          <Button
-            imageSrc={deleteImg}
-            description='delete icon'
-            onClick={() => console.log('pressed')}
-          />
+          {role === 'admin' ? (
+            <>
+              <Button
+                imageSrc={editImg}
+                description='edit icon'
+                onClick={() => navigation(`/courses/update/${id}`)}
+              />
+              <Button
+                imageSrc={deleteImg}
+                description='delete icon'
+                onClick={() => courseDelete(id)}
+              />
+            </>
+          ) : null}
         </div>
       </div>
     </div>

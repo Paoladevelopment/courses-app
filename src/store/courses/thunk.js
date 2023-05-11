@@ -1,11 +1,5 @@
 import * as creators from './actionCreators';
 
-const userToken = localStorage.getItem('userToken');
-
-let token = '';
-if (userToken) {
-  token = JSON.parse(userToken).token;
-}
 export const getAllCourses = () => {
   return async (dispatch) => {
     dispatch(creators.fetchCourseRequest);
@@ -24,7 +18,7 @@ export const getAllCourses = () => {
   };
 };
 
-export const saveCourses = (newCourse) => {
+export const saveCourse = (newCourse) => {
   return async (dispatch) => {
     dispatch(creators.fetchCourseRequest);
     try {
@@ -33,15 +27,49 @@ export const saveCourses = (newCourse) => {
         body: JSON.stringify(newCourse),
         headers: {
           'Content-Type': 'application/json',
-          Authorization: token,
+          Authorization: localStorage.getItem('userToken'),
         },
       });
       const result = await response.json();
+      console.log(result);
       if (result.successful) {
         dispatch(creators.saveNewCourse(result.result));
       }
     } catch (error) {
       dispatch(creators.fetchCourseFailure(error.message));
+    }
+  };
+};
+
+export const updateCourse = (id, info) => {
+  return async (dispatch) => {
+    const response = await fetch(`http://localhost:4000/courses/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify(info),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: localStorage.getItem('userToken'),
+      },
+    });
+    const result = await response.json();
+    if (result.successful) {
+      dispatch(creators.updateCourse(result.result));
+    }
+  };
+};
+
+export const deleteCourse = (id) => {
+  return async (dispatch) => {
+    const response = await fetch(`http://localhost:4000/courses/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: localStorage.getItem('userToken'),
+      },
+    });
+    const result = await response.json();
+    if (result.successful) {
+      dispatch(creators.deleteCourse(id));
     }
   };
 };

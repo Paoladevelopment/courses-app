@@ -32,6 +32,24 @@ export const reducerCourses = (state = initialState, action) => {
         courses: [...state.courses, action.payload.course],
       };
 
+    case actions.UPDATE_COURSE:
+      return {
+        ...state,
+        courses: state.courses.map((course) => {
+          return course.id === action.payload.courseUpdated.id
+            ? action.payload.courseUpdated
+            : course;
+        }),
+      };
+
+    case actions.DELETE_COURSE:
+      return {
+        ...state,
+        courses: state.courses.filter(
+          (course) => course.id !== action.payload.id
+        ),
+      };
+
     default:
       return state;
   }

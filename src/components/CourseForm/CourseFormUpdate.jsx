@@ -5,41 +5,79 @@ import { getHoursDuration } from '../../helpers/pipeDuration';
 import { getAuthorsId } from '../../helpers/authorsId';
 import { dateGeneratop } from '../../helpers/dateGeneratop';
 import { useForm } from 'react-hook-form';
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import './courseForm.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAuthors } from '../../store/authors/selectors';
 import { addAuthor } from '../../store/authors/thunks';
-import { saveCourse } from '../../store/courses/thunk';
-export const CourseForm = () => {
+import { updateCourse } from '../../store/courses/thunk';
+import { getCourses } from '../../store/courses/selectors';
+import { getCourse } from '../../helpers/courseById';
+import { getAuthorsCourse } from '../../helpers/AuthorsOfCourse';
+
+export const CourseFormUpdate = () => {
   const dispatch = useDispatch();
+  const { courseId } = useParams();
+  const courses = useSelector(getCourses);
   const authorsLst = useSelector(getAuthors);
+  const courseAtMoment = getCourse(courses, courseId);
+  const authorsThisCourse = getAuthorsCourse(
+    authorsLst,
+    courseAtMoment.authors
+  );
+  let beforeChangedAuthors = courseAtMoment.authors;
+
+  const authorsOutThisCourse = authorsLst.filter(
+    (aut) => authorsThisCourse.indexOf(aut) === -1
+  );
   const {
     register,
     formState: { errors },
     watch,
     handleSubmit,
-  } = useForm();
-
+  } = useForm({
+    defaultValues: {
+      title: courseAtMoment.title,
+      description: courseAtMoment.description,
+      duration: courseAtMoment.duration,
+    },
+  });
   const [textCreateAuthor, setTextCreateAuthor] = useState('');
-  const [authors, setAuthors] = useState(authorsLst);
-  const [courseAuthors, setCourseAuthors] = useState([]);
+  const [authors, setAuthors] = useState(authorsOutThisCourse);
+  const [courseAuthors, setCourseAuthors] = useState(authorsThisCourse);
   let navigation = useNavigate();
 
   const duration = watch('duration');
   const onSubmit = (data) => {
     if (courseAuthors.length !== 0) {
-      const newCourse = {
-        id: uuidv4(),
-        title: data.title,
-        description: data.description,
-        creationDate: dateGeneratop(),
-        duration: parseInt(duration),
-        authors: getAuthorsId(courseAuthors),
+      let idCurrentAuthors = getAuthorsId(courseAuthors);
+      if (idCurrentAuthors.length === beforeChangedAuthors.length) {
+        idCurrentAuthors =
+          idCurrentAuthors[0] === beforeChangedAuthors[0]
+            ? ''
+            : idCurrentAuthors;
+      }
+      const updatedCourse = {
+        title: data.title !== courseAtMoment.title ? data.title : '',
+        description:
+          data.description !== courseAtMoment.description
+            ? data.description
+            : '',
+        duration:
+          data.duration !== courseAtMoment.duration ? parseInt(duration) : '',
+        authors: idCurrentAuthors,
       };
-      dispatch(saveCourse(newCourse));
+
+      const filteredData = Object.entries(updatedCourse)
+        .filter(([key, value]) => value !== '')
+        .reduce((acc, [key, value]) => {
+          acc[key] = value;
+          return acc;
+        }, {});
+
+      dispatch(updateCourse(courseAtMoment.id, filteredData));
       navigation('/courses');
     } else {
       alert('Please select authors for the course');
@@ -91,7 +129,7 @@ export const CourseForm = () => {
               <p>Field title is required</p>
             )}
           </div>
-          <Button text='Create course' type='submit' />
+          <Button text='Update course' type='submit' />
         </div>
         <div className='app-createCourse__field'>
           <label htmlFor='description'>Description</label>

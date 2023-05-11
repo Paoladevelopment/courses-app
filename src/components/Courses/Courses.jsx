@@ -10,9 +10,11 @@ import './courses.css';
 import { useSelector } from 'react-redux';
 import { getCourses } from '../../store/courses/selectors';
 import { getAuthors } from '../../store/authors/selectors';
+import { getRole } from '../../store/user/selectors';
 export const Courses = () => {
   const allCourses = useSelector(getCourses);
   const authors = useSelector(getAuthors);
+  const role = useSelector(getRole);
   const [courses, setCourses] = useState(allCourses);
   let navigation = useNavigate();
   const searchCourse = (toSearch) => {
@@ -40,10 +42,12 @@ export const Courses = () => {
       <div className='app-courses'>
         <div className='app-courses__header'>
           <SearchBar onSearch={searchCourse} clearSearch={showAllCourses} />
-          <Button
-            text='Add new course'
-            onClick={() => navigation('/courses/add')}
-          />
+          {role === 'admin' ? (
+            <Button
+              text='Add new course'
+              onClick={() => navigation('/courses/add')}
+            />
+          ) : null}
         </div>
         {courses.map((course) => {
           return (

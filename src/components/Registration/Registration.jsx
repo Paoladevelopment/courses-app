@@ -4,7 +4,7 @@ import { useState } from 'react';
 import './registration.css';
 import { Link, useNavigate } from 'react-router-dom';
 
-import { registerNewUser } from '../../services';
+import { registerNewUser } from '../../store/user/thunk';
 export const Registration = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');

@@ -12,11 +12,8 @@ export const reducerUser = (state = userInitialState, action) => {
   switch (action.type) {
     case actions.LOGIN:
       return {
-        isAuth: true,
-        name: action.payload.user.name,
-        email: action.payload.user.email,
-        token: action.payload.user.token,
-        role: action.payload.user.role,
+        ...state,
+        token: action.payload,
       };
     case actions.LOGOUT:
       return {
@@ -25,6 +22,14 @@ export const reducerUser = (state = userInitialState, action) => {
         email: '',
         token: '',
         role: '',
+      };
+    case actions.GET_USER:
+      return {
+        isAuth: true,
+        name: action.payload.user.name,
+        email: action.payload.user.email,
+        token: '',
+        role: action.payload.user.role,
       };
     default:
       return state;

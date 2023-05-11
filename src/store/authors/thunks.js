@@ -1,11 +1,5 @@
 import * as creators from './actionCreators';
 
-const userToken = localStorage.getItem('userToken');
-
-let token = '';
-if (userToken) {
-  token = JSON.parse(userToken).token;
-}
 export const getAllAuthors = () => {
   return async (dispatch) => {
     dispatch(creators.fetchAuthorsRequest);
@@ -33,7 +27,7 @@ export const addAuthor = (author) => {
         body: JSON.stringify(author),
         headers: {
           'Content-Type': 'application/json',
-          Authorization: token,
+          Authorization: localStorage.getItem('userToken'),
         },
       });
       const result = await response.json();
