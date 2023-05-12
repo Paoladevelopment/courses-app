@@ -19,6 +19,7 @@ export const getAllCourses = () => {
 };
 
 export const saveCourse = (newCourse) => {
+  console.log(newCourse.authors);
   return async (dispatch) => {
     dispatch(creators.fetchCourseRequest);
     try {

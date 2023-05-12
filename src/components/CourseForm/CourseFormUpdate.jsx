@@ -47,6 +47,9 @@ export const CourseFormUpdate = () => {
   const [textCreateAuthor, setTextCreateAuthor] = useState('');
   const [authors, setAuthors] = useState(authorsOutThisCourse);
   const [courseAuthors, setCourseAuthors] = useState(authorsThisCourse);
+  const [initialSizeAuthLst, setInitialSizeAuthLst] = useState(
+    authorsLst.length
+  );
   let navigation = useNavigate();
 
   const duration = watch('duration');
@@ -106,11 +109,17 @@ export const CourseFormUpdate = () => {
         id: uuidv4(),
         name: textCreateAuthor,
       };
-      setAuthors([...authors, newAu]);
       dispatch(addAuthor(newAu));
       setTextCreateAuthor('');
     }
   };
+
+  useEffect(() => {
+    console.log(initialSizeAuthLst, authorsLst.length);
+    if (authorsLst.length !== initialSizeAuthLst) {
+      setAuthors([...authors, authorsLst[authorsLst.length - 1]]);
+    }
+  }, [authorsLst]);
 
   return (
     <>

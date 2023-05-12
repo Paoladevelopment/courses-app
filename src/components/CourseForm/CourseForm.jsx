@@ -5,7 +5,7 @@ import { getHoursDuration } from '../../helpers/pipeDuration';
 import { getAuthorsId } from '../../helpers/authorsId';
 import { dateGeneratop } from '../../helpers/dateGeneratop';
 import { useForm } from 'react-hook-form';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import './courseForm.css';
@@ -26,6 +26,9 @@ export const CourseForm = () => {
   const [textCreateAuthor, setTextCreateAuthor] = useState('');
   const [authors, setAuthors] = useState(authorsLst);
   const [courseAuthors, setCourseAuthors] = useState([]);
+  const [initialSizeAuthLst, setInitialSizeAuthLst] = useState(
+    authorsLst.length
+  );
   let navigation = useNavigate();
 
   const duration = watch('duration');
@@ -65,15 +68,19 @@ export const CourseForm = () => {
   const createNewAuthor = () => {
     if (textCreateAuthor !== '') {
       const newAu = {
-        id: uuidv4(),
         name: textCreateAuthor,
       };
-      setAuthors([...authors, newAu]);
       dispatch(addAuthor(newAu));
       setTextCreateAuthor('');
     }
   };
 
+  useEffect(() => {
+    console.log(initialSizeAuthLst, authorsLst.length);
+    if (authorsLst.length !== initialSizeAuthLst) {
+      setAuthors([...authors, authorsLst[authorsLst.length - 1]]);
+    }
+  }, [authorsLst]);
   return (
     <>
       <form className='app-createCourse' onSubmit={handleSubmit(onSubmit)}>
